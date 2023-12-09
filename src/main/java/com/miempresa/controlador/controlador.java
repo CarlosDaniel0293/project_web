@@ -46,22 +46,12 @@ public class controlador {
     }
 	
 	@PostMapping("/guardarLibro")
-	public String guardarLibro(@Valid @ModelAttribute("libro") Libro p, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-	    // Validar si hay errores de validación
-	    if (bindingResult.hasErrors()) {
-	        // Agregar el objeto Libro y los mensajes de error al modelo
-	        redirectAttributes.addFlashAttribute("libro", p);
-	        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.libro", bindingResult);
-
-	        // Agregar un log para verificar
-	        System.out.println("Mensajes de error: " + bindingResult.getAllErrors());
-	        System.out.println("Libro en el modelo: " + p);
-
-	        return "redirect:/agregarLibro";
+	public String guardarLibro(@ModelAttribute("libro") @Valid Libro form, 
+			BindingResult errores, Model model) {
+	    if (errores.hasErrors()) {
+	    	return "agregarLibro";
 	    }
-
-	    // No hay errores de validación, continuar con el guardado
-	    servicio.guardarLibro(p);
+	    servicio.guardarLibro(form);  
 	    return "redirect:/listarLibros";
 	}
 	

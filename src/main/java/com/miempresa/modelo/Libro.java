@@ -12,7 +12,7 @@ public class Libro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotBlank(message = "el nombre no puede estar vacío")
+	@NotBlank(message = "el título no puede estar vacío")
 	@Column(name = "nombre")
 	private String nombre;
 	
@@ -24,7 +24,6 @@ public class Libro {
 	@Column(name = "editorial")
 	private String editorial;
 	
-	@NotNull(message = "El año de publicación no puede ser nulo")
 	@Column(name = "anio_publicacion")
 	private int anioPublicacion;
 	
