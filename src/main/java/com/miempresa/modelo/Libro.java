@@ -3,7 +3,6 @@ import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Libros")
@@ -12,7 +11,7 @@ public class Libro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotBlank(message = "el título no puede estar vacío")
+	@NotBlank(message = "El título no puede estar vacío")
 	@Column(name = "nombre")
 	private String nombre;
 	

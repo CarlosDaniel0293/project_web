@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
 <head th:replace="fragmentos/header :: head"></head>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/formlibro.css}" />
 <body>
 	<div th:insert="/fragmentos/header :: menu"> </div>
 	<br>
@@ -64,9 +66,9 @@
 			  </div>
 			  
 			  
-			  <div class="form-group">
-			    <label for="exampleInput1">Género</label>
-			    <select th:field="*{genero}" class="custom-select" multiple="multiple" size="3">
+			  <div class="form-group align-items-center">
+			    <label class="mr-sm-2" for="inlineFormCustomSelect">Género</label>
+			    <select th:field="*{genero}" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
 			        <option value="Novela">Novela</option>
 			        <option value="Ciencia Ficción">Ciencia Ficción</option>
 			        <option value="Historia">Historia</option>

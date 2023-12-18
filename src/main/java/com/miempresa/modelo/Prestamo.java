@@ -1,6 +1,8 @@
 package com.miempresa.modelo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 @Entity
@@ -15,9 +17,11 @@ public class Prestamo {
     private Libro libro;
 
     @Column(name = "fecha_prestamo")
+    @NotNull(message = "La fecha de préstamo no puede estar vacía")
     private LocalDate fechaPrestamo;
 
     @Column(name = "fecha_devolucion")
+    @NotNull(message = "La fecha de devolución no puede estar vacía")
     private LocalDate fechaDevolucion;
 
     // Campo adicional para el libro seleccionado

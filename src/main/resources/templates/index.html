@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <head th:replace="fragmentos/header :: head"></head>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <body>
 	<div th:insert="/fragmentos/header :: menu"> </div>
 	<br>
@@ -8,5 +11,49 @@
 			Elija la tabla que desea utilizar
 		</div>
 	</div>
+	<div class="container mt-4" style="position: relative; height:80vh; width:160vw; max-width:500px">
+    	<canvas id="miGrafico"></canvas>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Hacer una llamada al endpoint que obtiene la cantidad de préstamos por libro
+                fetch('/prestamosPorLibro')
+                    .then(response => response.json())
+                    .then(data => {
+                        var ctx = document.getElementById('miGrafico').getContext('2d');
+                        var libros = Object.keys(data);
+                        var cantidades = Object.values(data);
+
+                        var myChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: libros,
+                                datasets: [{
+                                    data: cantidades,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.6)',
+                                        'rgba(54, 162, 235, 0.6)',
+                                        'rgba(255, 206, 86, 0.6)',
+                                        'rgba(75, 192, 192, 0.6)',
+                                        'rgba(153, 102, 255, 0.6)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                cutout: '50%', // Ajusta el tamaño del agujero
+                            }
+                        });
+                    });
+            });
+        </script>
+	</div>
+	
 </body>
 </html>

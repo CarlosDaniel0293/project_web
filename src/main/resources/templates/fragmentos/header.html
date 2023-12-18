@@ -6,28 +6,34 @@
     <meta charset="UTF-8">
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-select-1.13.9/dist/css/bootstrap-select.css}" />
     <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/estilo.css}" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
     <div th:fragment="menu">
         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="btn btn-secondary btn-lg" href="/listarLibros">
-                                Lista de Libros<span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="btn btn-info btn-lg" href="/listarPrestamos"> Préstamos<span class="sr-only">(current)</span></a>
-                        </li>
+						
+						<!-- Nuevo botón para ir a index.html -->
+						<li class="nav-item active">
+						    <a class="btn btn-primary btn-lg custom-btn" href="/index"> Inicio<span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item active">
+						    <a class="btn btn-secondary btn-lg custom-btn" href="/listarLibros">
+						        Registro de Libros<span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item active">
+						    <a class="btn btn-info btn-lg custom-btn" href="/listarPrestamos">Registro de Préstamos<span class="sr-only">(current)</span></a>
+						</li>
                         
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                        <button class="btn btn-success  my-2 my-sm-0" type="submit">Buscar</button>
-                    </form>
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/buscar}" method="get">
+					    <input class="form-control mr-sm-2" type="search" placeholder="Buscar por título" aria-label="Buscar" name="titulo">
+					    <button class="btn btn-success  my-2 my-sm-0" type="submit">Buscar</button>
+					</form>
                 </div>
                 <form th:action="@{/logout}" method="post">
 					<input class="btn btn-danger" type="submit" value="Cerrar Sesión" />

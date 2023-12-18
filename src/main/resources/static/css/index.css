@@ -1,0 +1,18 @@
+body {
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/concepto-leer-gafas-lectura.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -1;
+    opacity: 0.6; /* Ajusta este valor para cambiar la opacidad */
+}

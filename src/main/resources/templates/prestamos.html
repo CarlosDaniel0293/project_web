@@ -1,36 +1,61 @@
 <!DOCTYPE HTML>
 <head th:replace="fragmentos/header :: head"></head>
+<link rel="stylesheet" type="text/css" th:href="@{/css/estilo-libros.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/estilo.css}" />
 <body>
-	<div th:insert="/fragmentos/header :: menu"> </div>
-	<br>
-	<div class="container mt-4">
-		<a href="/agregarPrestamo" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Agregar</a>
-		<br>
-		<table class="table">
-		  <thead>
-		    <tr>
-		      <th scope="col">ID</th>
-		      <th scope="col">Libro</th>
-		      <th scope="col">Fecha de Préstamo</th>
-		      <th scope="col">Fecha de Devolución</th>
-		      <th scope="col">ACCIONES</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr th:each="prestamo : ${prestamos}">
-		      <th th:text="${prestamo.id}" scope="row"></th>
-		      <td th:text="${prestamo != null ? prestamo.libro != null ? prestamo.libro.nombre : '' : ''}"></td>
-		      <td th:text="${prestamo.fechaPrestamo}"></td>
-		      <td th:text="${prestamo.fechaDevolucion}"></td>
-		      <td>
-		      	<a th:href="@{/editarPrestamo/}+${prestamo.id}" class="btn btn-success">Editar</a>
-		      	<a th:onClick="eliminar([[${prestamo.id}]])" 
-		      	class="btn btn-danger">Eliminar</a>
-		      </td>
-		    </tr>
-		  </tbody>
-		</table>
-	</div>
-	<script src="funciones1.js"></script>
+    <div th:insert="/fragmentos/header :: menu"></div>
+    <br>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <a href="/agregarPrestamo" class="btn btn-primary btn-lg active btn-agregar" role="button" aria-pressed="true">Registrar Nuevo Préstamo</a>
+                <br>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">LIBRO</th>
+                            <th scope="col">FECHA DE PRÉSTAMO</th>
+                            <th scope="col">FECHA DE DEVOLUCIÓN</th>
+                            <th scope="col">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="prestamo : ${prestamos}">
+                            <th th:text="${prestamo.id}" scope="row"></th>
+                            <td th:text="${prestamo != null ? prestamo.libro != null ? prestamo.libro.nombre : '' : ''}"></td>
+                            <td th:text="${prestamo.fechaPrestamo}"></td>
+                            <td th:text="${prestamo.fechaDevolucion}"></td>
+                            <td>
+                                <a th:href="@{/editarPrestamo/}+${prestamo.id}" class="btn btn-success">Editar</a>
+                                <a th:onClick="eliminar([[${prestamo.id}]])" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Sección para mostrar el número total de préstamos -->
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Total de Préstamos Registrados</h5>
+                        <p class="card-text" th:text="${#lists.size(prestamos)}"></p>
+                    </div>
+                </div>
+
+                <!-- Sección para mostrar el número de préstamos por libro -->
+                <div class="card"> 
+                    <div class="card-body">
+                        <h5 class="card-title">Préstamos por Libro</h5>
+                        <ul>
+                            <li th:each="entry : ${prestamosPorLibro}" th:text="${entry.key + ': ' + entry.value}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="funciones1.js"></script>
 </body>
 </html>

@@ -1,40 +1,65 @@
 <!DOCTYPE HTML>
 <head th:replace="fragmentos/header :: head"></head>
+<link rel="stylesheet" type="text/css" th:href="@{/css/estilo-libros.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/estilo.css}" />
 <body>
-	<div th:insert="/fragmentos/header :: menu"> </div>
-	<br>
-	<div class="container mt-4">
-		<a href="/agregarLibro" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Agregar</a>
-		<br>
-		<table class="table">
-		  <thead>
-		    <tr> 
-		      <th scope="col">ID</th>
-		      <th scope="col">TÍTULO</th>
-		      <th scope="col">AUTOR</th>
-		      <th scope="col">EDITORIAL</th>
-		      <th scope="col">AÑO DE PUBLICACIÓN</th>
-		      <th scope="col">GÉNERO</th>
-		      <th scope="col">ACCIONES</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr th:each="libro : ${libros}">
-		      <th th:text="${libro.id}" scope="row"></th>
-		      <td th:text="${libro.nombre}"></td>
-		      <td th:text="${libro.autor}"></td>
-		      <td th:text="${libro.editorial}"></td>
-		      <td th:text="${libro.anioPublicacion}"></td>
-		      <td th:text="${libro.genero}"></td>
-		      <td>
-		      	<a th:href="@{/editarLibro/}+${libro.id}" class="btn btn-success">Editar</a>
-		      	<a th:onClick="eliminar([[${libro.id}]])"
-		      	class="btn btn-danger">Eliminar</a>
-		      </td>
-		    </tr>
-		  </tbody>
-		</table>
-	</div>
-	<script src="funciones.js"></script>
+    <div th:insert="/fragmentos/header :: menu"> </div>
+    <br>
+    <div class="container mt-4">
+        <a href="/agregarLibro" class="btn btn-primary btn-lg active btn-agregar" role="button" aria-pressed="true">Agregar Nuevo Libro</a>
+        <br>
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table" id="librosTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">TÍTULO</th>
+                            <th scope="col">AUTOR</th>
+                            <th scope="col">EDITORIAL</th>
+                            <th scope="col">AÑO DE PUBLICACIÓN</th>
+                            <th scope="col">GÉNERO</th>
+                            <th scope="col">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Datos existentes de la tabla -->
+                        <tr th:each="libro : ${libros}">
+                            <th th:text="${libro.id}" scope="row"></th>
+                            <td th:text="${libro.nombre}"></td>
+                            <td th:text="${libro.autor}"></td>
+                            <td th:text="${libro.editorial}"></td>
+                            <td th:text="${libro.anioPublicacion}"></td>
+                            <td th:text="${libro.genero}"></td>
+                            <td>
+                                <a th:href="@{/editarLibro/}+${libro.id}" class="btn btn-success">Editar</i></a>
+                                <a th:onClick="eliminar([[${libro.id}]])" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Sección para mostrar el número total de libros -->
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Total de Libros Registrados</h5>
+                        <p class="card-text" th:text="${#lists.size(libros)}"></p>
+                    </div>
+                </div>
+                <!-- Sección para mostrar el número total de libros por género -->
+				<div class="card">
+				    <div class="card-body">
+				        <h5 class="card-title">Total de Libros por Género</h5>
+				        <ul>
+				            <li th:each="entry : ${totalLibrosPorGenero != null ? totalLibrosPorGenero.entrySet() : {}}" th:text="${entry != null ? entry.key + ': ' + entry.value : ''}"></li>
+				        </ul>
+				    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+    <script src="funciones.js"></script>
 </body>
 </html>

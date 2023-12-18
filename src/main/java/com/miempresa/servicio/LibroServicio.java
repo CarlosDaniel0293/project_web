@@ -1,7 +1,9 @@
 package com.miempresa.servicio;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,5 +45,39 @@ public class LibroServicio implements ILibroServicio{
 		// TODO Auto-generated method stub
 		repo.deleteById(id);
 	}
+	
+	@Override
+	public Map<String, Long> obtenerTotalLibrosPorGenero() {
+	    List<Libro> libros = listarLibros();
+
+	    // Usa Java Streams para agrupar los libros por género y contarlos
+	    Map<String, Long> totalPorGenero = libros.stream()
+	            .collect(Collectors.groupingBy(Libro::getGenero, Collectors.counting()));
+
+	    // Si un género no tiene libros, se agrega con un total de 0
+	    obtenerTodosLosGeneros().forEach(genero -> totalPorGenero.putIfAbsent(genero, 0L));
+
+	    return totalPorGenero;
+	}
+
+	@Override
+	public List<String> obtenerTodosLosGeneros() {
+	    List<Libro> libros = listarLibros();
+
+	    // Usa Java Streams para obtener todos los géneros únicos
+	    List<String> todosLosGeneros = libros.stream()
+	            .map(Libro::getGenero)
+	            .distinct()
+	            .collect(Collectors.toList());
+
+	    return todosLosGeneros;
+	}
+	
+	@Override
+    public List<Libro> findByNombreContaining(String titulo) {
+        // Lógica para buscar libros por título en el repositorio
+        // Utiliza el método definido en la interfaz del repositorio
+        return repo.findByNombreContaining(titulo);
+    }
 
 }

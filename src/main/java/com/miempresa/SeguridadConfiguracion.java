@@ -26,7 +26,7 @@ public class SeguridadConfiguracion {
 		BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
 		return bcpe;
 	}
-	
+	 
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDet).passwordEncoder(bycryp);
 	}
